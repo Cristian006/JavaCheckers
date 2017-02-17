@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=BlackSquare
+comment0.text=\n\ Write\ a\ description\ of\ class\ BlackSquare\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=
+comment1.target=BlackSquare()
+comment2.params=
+comment2.target=void\ colorSquare()
+comment3.params=
+comment3.target=boolean\ checkColor()
+numComments=4
