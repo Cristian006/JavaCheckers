@@ -14,12 +14,35 @@ public class MyWorld extends World
      * Constructor for objects of class MyWorld.
      * 
      */
+    private final int halfWidth = 50;
+    
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(800, 800, 1); 
         makeBoard();
         List<RedSquare> redsq = getObjects(RedSquare.class);
+        
+    }
+    
+    public void addYellow(int posX, int posY){ // Given in array pos
+        
+        addObject(new YellowSquare(),
+            (posX * (halfWidth * 2)) + halfWidth,
+            (posY * (halfWidth * 2)) + halfWidth);
+            
+    }
+    
+    public void removeYellow(){
+        removeObjects(getObjects(YellowSquare.class));   
+    }
+    
+    public void addCheckers(int posX, int posY, Checkers newCheck){
+        addObject(newCheck, posX, posY );
+    }
+    
+    public void removeCheckers(Checkers remCheck){
+        removeObject(remCheck);
     }
     
     private void makeBoard()
@@ -34,7 +57,7 @@ public class MyWorld extends World
                 
             }
         }
-        
+        /*
         for(j = 150; j < 800; j+= 200)
         {
             for(i = 150; i < 800; i+= 200)
@@ -42,7 +65,7 @@ public class MyWorld extends World
                 addObject(new RedSquare(), i, j);
             }
         }
-        
+        */
         // black square
         for(j = 50; j < 800; j+= 200)
         {
@@ -51,7 +74,7 @@ public class MyWorld extends World
                 addObject(new BlackSquare(), i, j);
             }
         }
-        
+        /*
         for(j = 150; j < 800; j+= 200)
         {
             for(i = 50; i < 800; i+= 200)
@@ -59,6 +82,6 @@ public class MyWorld extends World
                 addObject(new BlackSquare(), i, j);
             }
         }
-        
+        */
     }
 }
