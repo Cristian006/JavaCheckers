@@ -1,5 +1,5 @@
 #Greenfoot properties
-#Mon Mar 13 19:24:28 PDT 2017
+#Fri Mar 17 20:34:53 PDT 2017
 target4.type=ClassTarget
 dependency3.from=MyWorld
 target3.height=50
@@ -72,12 +72,12 @@ target6.typeParameters=
 dependency1.from=CheckersControl
 target5.width=90
 target1.y=0
-target1.x=0
 editor.fx.0.height=813
+target1.x=0
 dependency1.type=UsesDependency
 readme.height=58
-readme.name=@README
 target2.name=CheckersControl
+readme.name=@README
 package.numDependencies=6
 class.CheckersControl.superclass=greenfoot.Actor
 target3.type=ClassTarget
@@ -86,11 +86,11 @@ dependency2.from=CheckersControl
 dependency2.type=UsesDependency
 target5.typeParameters=
 world.lastInstantiated=MyWorld
-target2.showInterface=false
 mainWindow.height=1092
+target2.showInterface=false
 editor.swing.0.height=700
 target3.name=Checkers
 target6.showInterface=false
-target3.width=80
 project.charset=UTF-8
+target3.width=80
 target4.showInterface=false

@@ -15,6 +15,10 @@ public class MyWorld extends World
      * 
      */
     private final int halfWidth = 50;
+    private CheckersControl mainControl;
+    private final int blocksWide = 8;
+    private final int blocksLong = 8;
+    private final int playerRows = 3;
     
     public MyWorld()
     {    
@@ -22,6 +26,7 @@ public class MyWorld extends World
         super(800, 800, 1); 
         makeBoard();
         List<RedSquare> redsq = getObjects(RedSquare.class);
+        mainControl = new CheckersControl(blocksLong, (blocksWide / 2), playerRows);
         
     }
     
@@ -57,7 +62,7 @@ public class MyWorld extends World
                 
             }
         }
-        /*
+        
         for(j = 150; j < 800; j+= 200)
         {
             for(i = 150; i < 800; i+= 200)
@@ -65,7 +70,7 @@ public class MyWorld extends World
                 addObject(new RedSquare(), i, j);
             }
         }
-        */
+        
         // black square
         for(j = 50; j < 800; j+= 200)
         {
@@ -74,7 +79,7 @@ public class MyWorld extends World
                 addObject(new BlackSquare(), i, j);
             }
         }
-        /*
+        
         for(j = 150; j < 800; j+= 200)
         {
             for(i = 50; i < 800; i+= 200)
@@ -82,6 +87,6 @@ public class MyWorld extends World
                 addObject(new BlackSquare(), i, j);
             }
         }
-        */
+        
     }
 }

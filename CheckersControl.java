@@ -35,14 +35,18 @@ public class CheckersControl extends Actor
         for (int i = 0; i < length; i++){
             if (i < playerRows ){
                 for (int k = 0; k < width; k++){
-                    checkAry[i][k] = Checkers(true);
-                    getWorld().addCheckers((( (i + 1) % 2 + (k * 2) ) * (halfWidth * 2))
-                    + halfWidth, (i * (halfWidth * 2)) + halfWidth, checkAry[i][k]);
+                    if ((k + i) % 2 > 0){
+                        checkAry[i][k/2] = new Checkers(true);
+                        ((MyWorld)getWorld()).addCheckers((( (i + 1) % 2 + (k * 2) ) * (halfWidth * 2))
+                            + halfWidth, (i * (halfWidth * 2)) + halfWidth, checkAry[i][k/2]);
+                    }
                 }
             } else if (i >= length - playerRows){
                 for (int k = 0; k < width; k++){
-                    checkAry[i][k] = Checkers(false);
-                    getWorld().addCheckers(( (i + 1) % 2 + (k * 2) ), i, checkAry[i][k]);
+                    if ((k + i) % 2 > 0){
+                        checkAry[i][k/2] = new Checkers(false);
+                        ((MyWorld)getWorld()).addCheckers(( (i + 1) % 2 + (k * 2) ), i, checkAry[i][k/2]);
+                    }
                 }
             }
         }
@@ -194,11 +198,11 @@ public class CheckersControl extends Actor
     
     public void removeYellow(){
         numOfYel = 0;
-        getWorld().removeYellow();
+        ((MyWorld)getWorld()).removeYellow();
     }
     
     public void createYellow(int posX, int posY){ // Given in array pos
-        getWorld().addYellow(posX, posY); // Give array pos
+        ((MyWorld)getWorld()).addYellow(posX, posY); // Give array pos
         numOfYel++;
     }
 }

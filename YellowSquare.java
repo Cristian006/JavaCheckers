@@ -22,7 +22,7 @@ public class YellowSquare extends Actor
     
     private void colorSquare()
     {
-        yellowSquare.setColor(Color(208, 208, 90, 180));
+        yellowSquare.setColor(new Color(208, 208, 90, 180));
         yellowSquare.fillRect(0,0,100,100);
         setImage(yellowSquare);
     }
