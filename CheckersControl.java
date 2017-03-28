@@ -26,27 +26,27 @@ public class CheckersControl extends Actor
     private int selPosX;
     private int selPosY;
     
-    public CheckersControl(int length, int width, int playerRows){
-        checkAry = new Checkers[length][width];
+    public CheckersControl(int length, int width){
         boardWidth = width * 2;
         boardLength = length;
- 
-        // Create board
-        for (int i = 0; i < length; i++){
+    }
+    
+    public void setupBoard( int playerRows){
+        checkAry = new Checkers[boardLength][boardWidth/2];
+                // Create board
+        for (int i = 0; i < boardLength; i++){
             if (i < playerRows ){
-                for (int k = 0; k < width; k++){
-                    if ((k + i) % 2 > 0){
-                        checkAry[i][k/2] = new Checkers(true);
-                        ((MyWorld)getWorld()).addCheckers((( (i + 1) % 2 + (k * 2) ) * (halfWidth * 2))
-                            + halfWidth, (i * (halfWidth * 2)) + halfWidth, checkAry[i][k/2]);
-                    }
+                for (int k = 0; k < boardWidth/2; k++){
+                     checkAry[i][k] = new Checkers(true);
+                     getWorldOfType(MyWorld.class).addObject(checkAry[i][k], ( ( ( (i + 1) % 2 ) + (k * 2) ) * (halfWidth * 2))
+                        + halfWidth, (i * (halfWidth * 2)) + halfWidth);
                 }
-            } else if (i >= length - playerRows){
-                for (int k = 0; k < width; k++){
-                    if ((k + i) % 2 > 0){
-                        checkAry[i][k/2] = new Checkers(false);
-                        ((MyWorld)getWorld()).addCheckers(( (i + 1) % 2 + (k * 2) ), i, checkAry[i][k/2]);
-                    }
+            } else if (i >= boardLength - playerRows){
+                for (int k = 0; k < boardWidth/2; k++){
+                     checkAry[i][k] = new Checkers(false);
+                     getWorldOfType(MyWorld.class).addObject(checkAry[i][k], ( ( (i + 1) % 2 + (k * 2) ) * halfWidth * 2) + halfWidth ,
+                        (i * halfWidth * 2) + halfWidth );
+                    
                 }
             }
         }

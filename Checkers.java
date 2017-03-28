@@ -30,7 +30,7 @@ public class Checkers extends Actor
             upFacing = true;
         }
         
-        checkerPiece.fillOval(0, 0, halfWidth, halfWidth);
+        checkerPiece.fillOval(0, 0, halfWidth * 2, halfWidth * 2);
         
         setImage(checkerPiece);
     }

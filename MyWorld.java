@@ -26,7 +26,9 @@ public class MyWorld extends World
         super(800, 800, 1); 
         makeBoard();
         List<RedSquare> redsq = getObjects(RedSquare.class);
-        mainControl = new CheckersControl(blocksLong, (blocksWide / 2), playerRows);
+        mainControl = new CheckersControl(blocksLong, (blocksWide / 2));
+        addObject(mainControl,0,0);
+        mainControl.setupBoard(playerRows);
         
     }
     
