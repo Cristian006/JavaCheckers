@@ -56,38 +56,45 @@ public class CheckersControl extends Actor
     {
         MouseInfo currentMouse = Greenfoot.getMouseInfo();
         // If mouse is clicked
-        if (currentMouse.getButton() == 1){
-            int posX = currentMouse.getX();
-            int posY = currentMouse.getY();
-            if (selected = true){
-                if (checkYellow(posX, posY)){
-                    //Moving Checkers piece
-                    checkAry[posY/(halfWidth * 2)][posX/(halfWidth * 4)] = new Checkers(
-                        checkAry[selPosY/(halfWidth * 2)][selPosX/(halfWidth * 4)]);//,
-                        //(selPosX - (selPosX % (halfWidth * 2))) + halfWidth,
-                        //(selPosY - (selPosY % (halfWidth * 2))) + halfWidth);
-                    checkAry[selPosY/(halfWidth * 2)][selPosX/(halfWidth * 4)] = null;
-                }
-                
-                removeYellow();
-                selPosX = -1;
-                selPosY = -1;
-                selected = false;
-            }
-            else {
 
-                if (checkPos(posX, posY)){
-                    if (checkForward(posX, posY,
-                        checkAry[posY/(halfWidth * 2)][posX/(halfWidth * 4)].getUpFacing(),
-                        checkAry[posY/(halfWidth * 2)][posX/(halfWidth * 4)].getUpgraded())){
-                        selected = true;
-                        selPosX = posX;
-                        selPosY = posY;
+        if (currentMouse != null){
+            System.out.println("NewThing");
+            if (currentMouse.getButton() == 1){
+               System.out.println("Hello");
+                int posX = currentMouse.getX();
+                int posY = currentMouse.getY();
+                if (selected == true){
+                    System.out.println("true Selected");
+                    if (checkYellow(posX, posY)){
+                        //Moving Checkers piece
+                        checkAry[posY/(halfWidth * 2)][posX/(halfWidth * 4)] = new Checkers(
+                            checkAry[selPosY/(halfWidth * 2)][selPosX/(halfWidth * 4)]);//,
+                            //(selPosX - (selPosX % (halfWidth * 2))) + halfWidth,
+                            //(selPosY - (selPosY % (halfWidth * 2))) + halfWidth);
+                        checkAry[selPosY/(halfWidth * 2)][selPosX/(halfWidth * 4)] = null;
+                    }
+                    
+                    removeYellow();
+                    selPosX = -1;
+                    selPosY = -1;
+                    selected = false;
+                }
+                else {
+                    System.out.println("false Selected");
+                    if (checkPos(posX, posY)){
+                        System.out.println("Checkers Selected");
+                        if (checkForward(posX, posY,
+                            checkAry[posY/(halfWidth * 2)][posX/(halfWidth * 4)].getUpFacing(),
+                            checkAry[posY/(halfWidth * 2)][posX/(halfWidth * 4)].getUpgraded())){
+                            selected = true;
+                            selPosX = posX;
+                            selPosY = posY;
+                        } 
                     } 
-                } 
-            }
+                }
+                    
                 
-            
+            }
         }
     }
     
