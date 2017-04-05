@@ -5,7 +5,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class YellowSquare extends Actor
+public class PathTile extends BoardObject
 {
     /**
      * Act - do whatever the YellowSquare wants to do. This method is called whenever
@@ -15,7 +15,7 @@ public class YellowSquare extends Actor
     
     private GreenfootImage yellowSquare = new GreenfootImage(100, 100);
     
-    public YellowSquare()
+    public PathTile()
     {
         colorSquare();
     }
@@ -27,8 +27,8 @@ public class YellowSquare extends Actor
         setImage(yellowSquare);
     }
     
-    public void act() 
-    {
-        // Add your action code here.
-    }    
+    @Override
+    public void OnClick(){
+        //MOVE CURRENTLY SELECTED OBJECT TO THIS POSITION
+    }
 }

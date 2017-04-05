@@ -19,7 +19,8 @@ public class CheckersControl extends Actor
     
     private final int boardWidth;
     private final int boardLength;
-    private static Checkers [][] checkAry;
+    //private static Checkers [][] checkAry;
+    private static CheckerPiece [][] checkAry;
     private static int [][] yellowPos = new int[16][2];
     private static int numOfYel = 0;
     private boolean selected = false;
@@ -32,21 +33,25 @@ public class CheckersControl extends Actor
     }
     
     public void setupBoard( int playerRows){
-        checkAry = new Checkers[boardLength][boardWidth/2];
-                // Create board
+        //checkAry = new Checkers[boardLength][boardWidth/2];
+        checkAry = new CheckerPiece[boardLength][boardWidth/2];
+        // Create board
         for (int i = 0; i < boardLength; i++){
             if (i < playerRows ){
                 for (int k = 0; k < boardWidth/2; k++){
-                     checkAry[i][k] = new Checkers(true);
-                     getWorldOfType(MyWorld.class).addObject(checkAry[i][k], ( ( ( (i + 1) % 2 ) + (k * 2) ) * (halfWidth * 2))
-                        + halfWidth, (i * (halfWidth * 2)) + halfWidth);
+                     //checkAry[i][k] = new Checkers(true);
+                     checkAry[i][k] = new RedPiece();
+                     //getWorldOfType(CheckerBoard.class).addObject(checkAry[i][k], ( ( ( (i + 1) % 2 ) + (k * 2) ) * (halfWidth * 2))
+                     //   + halfWidth, (i * (halfWidth * 2)) + halfWidth);
+                     ((CheckerBoard)getWorld()).addObject(checkAry[i][k], ( ( ( (i + 1) % 2 ) + (k * 2) ) * (halfWidth * 2)) + halfWidth, (i * (halfWidth * 2)) + halfWidth);
                 }
             } else if (i >= boardLength - playerRows){
                 for (int k = 0; k < boardWidth/2; k++){
-                     checkAry[i][k] = new Checkers(false);
-                     getWorldOfType(MyWorld.class).addObject(checkAry[i][k], ( ( (i + 1) % 2 + (k * 2) ) * halfWidth * 2) + halfWidth ,
-                        (i * halfWidth * 2) + halfWidth );
-                    
+                     //checkAry[i][k] = new Checkers(false);
+                     checkAry[i][k] = new BlackPiece();
+                     //getWorldOfType(CheckerBoard.class).addObject(checkAry[i][k], ( ( (i + 1) % 2 + (k * 2) ) * halfWidth * 2) + halfWidth ,
+                        //(i * halfWidth * 2) + halfWidth );
+                    ((CheckerBoard)getWorld()).addObject(checkAry[i][k], ( ( (i + 1) % 2 + (k * 2) ) * halfWidth * 2) + halfWidth , (i * halfWidth * 2) + halfWidth );
                 }
             }
         }
@@ -56,7 +61,7 @@ public class CheckersControl extends Actor
     {
         MouseInfo currentMouse = Greenfoot.getMouseInfo();
         // If mouse is clicked
-
+        /*
         if (currentMouse != null){
             System.out.println("NewThing");
             if (currentMouse.getButton() == 1){
@@ -92,10 +97,8 @@ public class CheckersControl extends Actor
                         } 
                     } 
                 }
-                    
-                
             }
-        }
+        }*/
     }
     
     public boolean checkYellow(int posX, int posY){ // Given in mouse pos
@@ -205,11 +208,11 @@ public class CheckersControl extends Actor
     
     public void removeYellow(){
         numOfYel = 0;
-        ((MyWorld)getWorld()).removeYellow();
+        ((CheckerBoard)getWorld()).removeYellow();
     }
     
     public void createYellow(int posX, int posY){ // Given in array pos
-        ((MyWorld)getWorld()).addYellow(posX, posY); // Give array pos
+        ((CheckerBoard)getWorld()).addYellow(posX, posY); // Give array pos
         numOfYel++;
     }
 }
