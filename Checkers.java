@@ -34,6 +34,8 @@ public class Checkers extends Actor
         
         setImage(checkerPiece);
     }
+    
+    
     public Checkers(Checkers prevCheck){
         upgraded = prevCheck.getUpgraded();
         upFacing = prevCheck.getUpFacing();

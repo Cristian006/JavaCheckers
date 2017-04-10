@@ -14,6 +14,8 @@ public class CheckerPiece extends BoardObject
     private Color highlightColor = Color.WHITE;
     private GreenfootImage defaultImage;
     private GreenfootImage myImage;
+    protected int xPosition;
+    protected int yPosition;
     
     public CheckerPiece(){
         //empty constructor

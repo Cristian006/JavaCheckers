@@ -8,13 +8,36 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class BlackPiece extends CheckerPiece
 {
-    public BlackPiece(){
-        //empty constructor
+    public BlackPiece(int xPos, int yPos){
+        //empty constructor   
         super();
+        
+        setXPosition(xPos);
+        setYPosition(yPos);
+    }
+    
+    public void setXPosition(int xPos)
+    {
+        xPosition = xPos;
+    }
+    
+    public int getXPosition(){
+        return xPosition;
+    }
+    
+    public void setYPosition(int yPos)
+    {
+        yPosition = yPos;
+    }
+    
+    public int getYPosition(){
+        return yPosition;
     }
     
     @Override
     public boolean isRed(){
         return false;
     }
+    
+    
 }

@@ -13,11 +13,16 @@ public class BoardObject extends Actor
         super();
     }
     
+    
+    
+    
+    
     public void act() 
     {
         //setting the checkerboard's currently selected piece to this object
         if (Greenfoot.mouseClicked(this)) {
             //Whenever this Object is Clicked On
+            System.out.println("clicked: ");
             OnClick();
         }
     }

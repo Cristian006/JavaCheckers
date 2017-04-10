@@ -17,45 +17,22 @@ public class CheckersControl extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    private final int boardWidth;
-    private final int boardLength;
+    private final int numberOfSquaresAcrossTheBoard ;
+    private final int numberOfSquaresDownTheBoard;;
     //private static Checkers [][] checkAry;
     private static CheckerPiece [][] checkAry;
+    
     private static int [][] yellowPos = new int[16][2];
     private static int numOfYel = 0;
     private boolean selected = false;
     private int selPosX;
     private int selPosY;
     
-    public CheckersControl(int length, int width){
-        boardWidth = width * 2;
-        boardLength = length;
+    public CheckersControl(int numberOfSquaresDownTheBoard, int numberOfSquaresAcrossTheBoard ){
+        this.numberOfSquaresAcrossTheBoard  = numberOfSquaresAcrossTheBoard ;
+        this.numberOfSquaresDownTheBoard  = numberOfSquaresDownTheBoard;
     }
-    
-    public void setupBoard( int playerRows){
-        //checkAry = new Checkers[boardLength][boardWidth/2];
-        checkAry = new CheckerPiece[boardLength][boardWidth/2];
-        // Create board
-        for (int i = 0; i < boardLength; i++){
-            if (i < playerRows ){
-                for (int k = 0; k < boardWidth/2; k++){
-                     //checkAry[i][k] = new Checkers(true);
-                     checkAry[i][k] = new RedPiece();
-                     //getWorldOfType(CheckerBoard.class).addObject(checkAry[i][k], ( ( ( (i + 1) % 2 ) + (k * 2) ) * (halfWidth * 2))
-                     //   + halfWidth, (i * (halfWidth * 2)) + halfWidth);
-                     ((CheckerBoard)getWorld()).addObject(checkAry[i][k], ( ( ( (i + 1) % 2 ) + (k * 2) ) * (halfWidth * 2)) + halfWidth, (i * (halfWidth * 2)) + halfWidth);
-                }
-            } else if (i >= boardLength - playerRows){
-                for (int k = 0; k < boardWidth/2; k++){
-                     //checkAry[i][k] = new Checkers(false);
-                     checkAry[i][k] = new BlackPiece();
-                     //getWorldOfType(CheckerBoard.class).addObject(checkAry[i][k], ( ( (i + 1) % 2 + (k * 2) ) * halfWidth * 2) + halfWidth ,
-                        //(i * halfWidth * 2) + halfWidth );
-                    ((CheckerBoard)getWorld()).addObject(checkAry[i][k], ( ( (i + 1) % 2 + (k * 2) ) * halfWidth * 2) + halfWidth , (i * halfWidth * 2) + halfWidth );
-                }
-            }
-        }
-    }
+  
     
     public void act() 
     {
@@ -100,6 +77,7 @@ public class CheckersControl extends Actor
             }
         }*/
     }
+    // COmmented out by Antonio, dthis code did nothing that I c could see
     
     public boolean checkYellow(int posX, int posY){ // Given in mouse pos
         int tempPosY = (posY/ (halfWidth * 2));
@@ -153,9 +131,9 @@ public class CheckersControl extends Actor
                 }
             }
             // Check right
-            if (posX < (boardWidth - 1) * 100){
+            if (posX < (numberOfSquaresAcrossTheBoard  - 1) * 100){
                 if (checkPos(posX + 100, posY - 100)){
-                    if (posX < (boardWidth - 2) * 100 && !checkPos(posX + 200, posY - 200)){
+                    if (posX < (numberOfSquaresAcrossTheBoard  - 2) * 100 && !checkPos(posX + 200, posY - 200)){
                         if (checkForward(posX + 200, posY - 200, facing, upgraded)){
                             hasDest = true;
                         }else { 
@@ -169,7 +147,7 @@ public class CheckersControl extends Actor
                 }
             }
         }
-        if ((!facing || upgraded) && arPosY < boardLength - 2){
+        if ((!facing || upgraded) && arPosY < numberOfSquaresDownTheBoard  - 2){
             // check Left
             if (posX > 100){
                 if (checkPos(posX - 100, posY + 100)){
@@ -187,9 +165,9 @@ public class CheckersControl extends Actor
                 }
             }
             // Check right
-            if (posX < (boardWidth - 1) * 100){
+            if (posX < (numberOfSquaresAcrossTheBoard  - 1) * 100){
                 if (checkPos(posX + 100, posY + 100)){
-                    if (posX < (boardWidth - 2) * 100 && !checkPos(posX + 200, posY + 200)){
+                    if (posX < (numberOfSquaresAcrossTheBoard  - 2) * 100 && !checkPos(posX + 200, posY + 200)){
                         if (checkForward(posX + 200, posY + 200, facing, upgraded)){
                             hasDest = true;
                         }else { 

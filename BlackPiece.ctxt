@@ -1,8 +1,16 @@
 #BlueJ class context
 comment0.target=BlackPiece
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ BlackPiece\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=
-comment1.target=BlackPiece()
-comment2.params=
-comment2.target=boolean\ isRed()
-numComments=3
+comment1.params=xPos\ yPos
+comment1.target=BlackPiece(int,\ int)
+comment2.params=xPos
+comment2.target=void\ setXPosition(int)
+comment3.params=
+comment3.target=int\ getXPosition()
+comment4.params=yPos
+comment4.target=void\ setYPosition(int)
+comment5.params=
+comment5.target=int\ getYPosition()
+comment6.params=
+comment6.target=boolean\ isRed()
+numComments=7

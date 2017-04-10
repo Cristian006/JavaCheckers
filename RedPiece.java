@@ -8,9 +8,21 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class RedPiece extends CheckerPiece
 {
-    public RedPiece(){
+    public RedPiece(int xPos, int yPos){
         //empty constructor
         super();
+        this.xPosition = xPos;
+        this.yPosition = yPos;
+    }
+    
+    public int getXposition()
+    {
+        return xPosition;
+    }
+    
+     public int getYposition()
+    {
+        return yPosition;
     }
     
     @Override
