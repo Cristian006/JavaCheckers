@@ -10,9 +10,6 @@ public class Vector2
     private int x;
     private int y;
 
-    /**
-     * Constructor for objects of class Vector2
-     */
     public Vector2()
     {
         x = 0;
@@ -22,5 +19,13 @@ public class Vector2
     public Vector2(int x, int y){
         this.x = x;
         this.y = y;
+    }
+    
+    int getX(){
+        return x;
+    }
+    
+    int getY(){
+        return y;
     }
 }

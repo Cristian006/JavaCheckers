@@ -16,6 +16,7 @@ public class CheckerBoard extends World
      * 
      */
     private final int halfWidth = 50;
+    private final int fullWidth = 100;
     private CheckersControl mainControl;
     private final int numberOfSquaresAcrossTheBoard  = 8;
     private final int numberOfSquaresDownTheBoard  = 8;
@@ -26,40 +27,15 @@ public class CheckerBoard extends World
     private CheckerPiece selectedPiece = null;
     private ScoreBoard scoreBoard = null;
 
-    //private ArrayList<BlackSquareLocationOnBoard > listOfValidLocationsOnCheckerBoard;
-
+    ArrayList<Vector2> movableVectors = new ArrayList<Vector2>();
+        
     public CheckerBoard()
     {    
         super(800, 800, 1); 
 
-         putRedPiecesOnTheBoard();
-         putBlackPiecesOnTheBoard();
-
-         // This method testAllBlackLocations
-         // shows how to use and get all the valid black locations
-         // black locations are all possible  valid moves
-        //testAllBlackLocations();
-
-        mainControl = new CheckersControl(numberOfSquaresDownTheBoard, 
-            numberOfSquaresAcrossTheBoard );
-        addObject(mainControl,0,0);
-    }
-
-    public void testAllBlackLocations()
-    {
-        // This should put a black piece on every single black square
-        // this verifies that getAllValidLocationsOnCheckerBoard works
-
-        ArrayList<BlackSquareLocationOnBoard > listOfValidLocationsOnCheckerBoard;
-        listOfValidLocationsOnCheckerBoard  = getAllValidLocationsOhCheckerBoard();
-
-        for(int i = 0; i < listOfValidLocationsOnCheckerBoard .size(); i++)
-        {
-            int xLocation = listOfValidLocationsOnCheckerBoard .get(i).getXPosition();
-            int yLocation = listOfValidLocationsOnCheckerBoard .get(i).getYPosition();
-            RedPiece redPiece = new RedPiece(xLocation, yLocation);
-            addObject(redPiece, xLocation, yLocation); 
-        }
+        
+        putRedPiecesOnTheBoard();
+        putBlackPiecesOnTheBoard();
     }
 
     public void putRedPiecesOnTheBoard()
@@ -72,7 +48,7 @@ public class CheckerBoard extends World
             for (int k = 0; k < numberOfSquaresAcrossTheBoard  / 2; k++){
                 xLocation = ( ( ( (i + 1) % 2 ) + (k * 2) ) * (halfWidth * 2)) + halfWidth;
                 yLocation = (i * (halfWidth * 2)) + halfWidth;
-
+                
                 checkAry[i][k] = new RedPiece(xLocation, yLocation);
                 addObject(checkAry[i][k], xLocation, yLocation);  
             }
@@ -97,33 +73,29 @@ public class CheckerBoard extends World
             }
         }
     }
-
-    private ArrayList<BlackSquareLocationOnBoard > getAllValidLocationsOhCheckerBoard()
+    /*
+    private ArrayList<AvailableLocation > getAllValidLocationsOhCheckerBoard()
     {
-        ArrayList<BlackSquareLocationOnBoard > listOfblackSquareLocationOnBoard ;
-        listOfblackSquareLocationOnBoard  = new ArrayList<BlackSquareLocationOnBoard >();
-        BlackSquareLocationOnBoard   blackSquareLocationOnBoard;
+        ArrayList<AvailableLocation> locations = new ArrayList<AvailableLocation>();
 
         for(int x = 150; x <= 750; x += 200)
         {
             for(int y = 50; y <= 650; y += 200)
             {  
-                blackSquareLocationOnBoard  = new BlackSquareLocationOnBoard (x,y);
-                listOfblackSquareLocationOnBoard .add(blackSquareLocationOnBoard );
+                locations.add(new AvailableLocation (x,y));
             }
         }
 
         for(int x = 50; x <= 650; x += 200)
         {
             for(int y = 150; y <= 750; y += 200)
-            {
-                blackSquareLocationOnBoard  = new BlackSquareLocationOnBoard (x,y);
-                listOfblackSquareLocationOnBoard .add(blackSquareLocationOnBoard );
+            {    
+                locations.add(new AvailableLocation (x,y));
             }
         }
 
-        return listOfblackSquareLocationOnBoard ;
-    }
+        return locations ;
+    }*/
 
     //is the current turn red
     public boolean getIsRedTurn(){
@@ -169,7 +141,79 @@ public class CheckerBoard extends World
 
     //Create Movable Path for checker piece
     public void setMovableSquares(){
-
+        System.out.println("SETTING MOVABLESQUARES");
+        movableVectors = new ArrayList<Vector2>();
+        int curX = selectedPiece.getX();
+        int curY = selectedPiece.getY();
+        
+        //populate array list recursively with vector2's of available spaces
+        getMovableSquares(curX, curY);
+        
+        for(int i = 0; i < movableVectors.size(); i++){
+            //set yellow squares in world
+            addYellow(movableVectors.get(i).getX(), movableVectors.get(i).getY());
+            
+        }
+    }
+    
+    public void getMovableSquares(int x, int y){
+        
+        getMovableSquaresInDirection(true, true, x, y);
+        
+        getMovableSquaresInDirection(true, false, x, y);
+        
+        getMovableSquaresInDirection(false, true, x, y);
+        
+        getMovableSquaresInDirection(false, false, x, y);
+        
+        //if(checkPos(x-100, y-100)){
+            //movableVectors.add(new Vector2(curX-100, curY-100));
+        //}
+        //getMovableSquares(dslkfjalkjfa.dfsaojahfla_)
+    }
+    
+    public void getMovableSquaresInDirection(boolean posXDir, boolean posYDir, int x, int y){
+        int xMovementSize = posXDir ? fullWidth : -fullWidth;
+        int yMovementSize = posYDir ? fullWidth : -fullWidth;
+        //check if we're in bounds
+        if ((posXDir && x < ( ( fullWidth * numberOfSquaresAcrossTheBoard) - fullWidth ))||
+            (!posXDir && x > fullWidth ) ||
+            (posYDir && x < ( ( fullWidth * numberOfSquaresAcrossTheBoard) - fullWidth ) ||
+            (!posYDir && y > fullWidth ))){
+            
+            if( checkPos(x + xMovementSize, y + yMovementSize)){
+                movableVectors.add(new Vector2(x + xMovementSize, y + yMovementSize));
+            }else{
+                
+                //if(
+                
+            }
+        }
+        
+    }
+    
+    public boolean checkPos(int posX, int posY){ // Given in mouse pos
+        posX = posX/(halfWidth * 2);
+        posY = posY/(halfWidth * 2);
+        //TODO: CHECK IF OUT OF BOUNDS
+        if ((posX + posY) % 2 > 0){
+            if (checkAry[posY][(posX / 2)] == null && (posX + posY)% 2 > 0) 
+            {
+                //the spot is open
+                return true;
+            }
+            else if(checkAry[posY][(posX / 2)] != null && (posX + posY)% 2 > 0)
+            {
+                return (isRedTurn != checkAry[posY][(posX/2)].isRed());
+            }
+            else{
+                return false;
+            }
+        } 
+        else 
+        { 
+            return false; 
+        }
     }
 
     //Remove Movable Path for checker piece

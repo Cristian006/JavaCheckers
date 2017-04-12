@@ -12,11 +12,6 @@ public class CheckersControl extends Actor
     
     private final int  halfWidth = 50;
     
-    /**
-     * Act - do whatever the CheckersControl wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    
     private final int numberOfSquaresAcrossTheBoard ;
     private final int numberOfSquaresDownTheBoard;;
     //private static Checkers [][] checkAry;
