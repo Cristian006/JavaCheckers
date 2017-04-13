@@ -37,6 +37,8 @@ public class CheckerBoard extends World
         putRedPiecesOnTheBoard();
         putBlackPiecesOnTheBoard();
     }
+    
+    private enum checkerType{Empty, OutOfBounds, Opponent, Player}
 
     public void putRedPiecesOnTheBoard()
     {
@@ -156,64 +158,85 @@ public class CheckerBoard extends World
         }
     }
     
-    public void getMovableSquares(int x, int y){
+    // Returns true if there is a further square to move to
+    public boolean getMovableSquares(int x, int y){
+        boolean notFinalSquare = false;
         
-        getMovableSquaresInDirection(true, true, x, y);
+        if (getMovableSquaresInDirection(true, true, x, y)){
+            notFinalSquare = true;
+        }
         
-        getMovableSquaresInDirection(true, false, x, y);
+        if (getMovableSquaresInDirection(true, false, x, y)){
+            notFinalSquare = true;
+        }
         
-        getMovableSquaresInDirection(false, true, x, y);
+        if (getMovableSquaresInDirection(false, true, x, y)){
+            notFinalSquare = true;
+        }
         
-        getMovableSquaresInDirection(false, false, x, y);
+        if (getMovableSquaresInDirection(false, false, x, y)){
+            notFinalSquare = true;
+        }
+        // See if there is a further square to move to
+        return notFinalSquare;
         
-        //if(checkPos(x-100, y-100)){
-            //movableVectors.add(new Vector2(curX-100, curY-100));
-        //}
-        //getMovableSquares(dslkfjalkjfa.dfsaojahfla_)
     }
     
-    public void getMovableSquaresInDirection(boolean posXDir, boolean posYDir, int x, int y){
+    // Returns true if there is a further square to move to
+    public boolean getMovableSquaresInDirection(boolean posXDir, boolean posYDir, int x, int y){
         int xMovementSize = posXDir ? fullWidth : -fullWidth;
         int yMovementSize = posYDir ? fullWidth : -fullWidth;
-        //check if we're in bounds
-        if ((posXDir && x < ( ( fullWidth * numberOfSquaresAcrossTheBoard) - fullWidth ))||
-            (!posXDir && x > fullWidth ) ||
-            (posYDir && x < ( ( fullWidth * numberOfSquaresAcrossTheBoard) - fullWidth ) ||
-            (!posYDir && y > fullWidth ))){
-            
-            if( checkPos(x + xMovementSize, y + yMovementSize)){
-                movableVectors.add(new Vector2(x + xMovementSize, y + yMovementSize));
-            }else{
+  
+        checkerType currentType = checkPos(x + xMovementSize, y + yMovementSize);
+        
+        if(currentType == checkerType.Empty){
+            movableVectors.add(new Vector2(x + xMovementSize, y + yMovementSize));
+            return true;
+        }else if (currentType == checkerType.Opponent){
+            currentType = checkPos(x + (xMovementSize * 2), y + (yMovementSize * 2));
                 
-                //if(
+            if(currentType == checkerType.Empty){
                 
+                if( ! getMovableSquares(x + (xMovementSize * 2), y + (yMovementSize * 2)) ){
+                    movableVectors.add(new Vector2(x + (xMovementSize * 2), y + (yMovementSize * 2)));
+                }
+                return true;
             }
+        }else{
+            return false;
         }
         
     }
     
-    public boolean checkPos(int posX, int posY){ // Given in mouse pos
-        posX = posX/(halfWidth * 2);
-        posY = posY/(halfWidth * 2);
-        //TODO: CHECK IF OUT OF BOUNDS
-        if ((posX + posY) % 2 > 0){
-            if (checkAry[posY][(posX / 2)] == null && (posX + posY)% 2 > 0) 
-            {
-                //the spot is open
-                return true;
-            }
-            else if(checkAry[posY][(posX / 2)] != null && (posX + posY)% 2 > 0)
-            {
-                return (isRedTurn != checkAry[posY][(posX/2)].isRed());
-            }
-            else{
-                return false;
-            }
-        } 
-        else 
-        { 
-            return false; 
+    public checkerType checkPos(int posX, int posY){ // Given in mouse pos
+        //Check out of bounds first
+        
+        if (posX < 0 || posY < 0 || (posX > (fullWidth * (numberOfSquaresAcrossTheBoard - 1)) ) ||
+            posY > (fullWidth * (numberOfSquaresAcrossTheBoard - 1) )){
+                return checkerType.OutOfBounds;
         }
+            
+        
+        posX = posX/(fullWidth);
+        posY = posY/(fullWidth);
+        
+        // posX + posY % 2 checks for whether it is a black square or not
+        // further investigate if problems arise
+        if (checkAry[posY][(posX / 2)] == null && (posX + posY)% 2 > 0) 
+        {
+            //the spot is open
+            return checkerType.Empty;
+        }
+        else if(checkAry[posY][(posX / 2)] != null && (posX + posY)% 2 > 0)
+        {
+            if(isRedTurn != checkAry[posY][(posX/2)].isRed()){
+                return checkerType.Opponent;
+            }
+        }
+        else{
+            return checkerType.Player;
+        }
+
     }
 
     //Remove Movable Path for checker piece
