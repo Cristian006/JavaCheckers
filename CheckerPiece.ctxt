@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=CheckerPiece
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ CheckerPiece\ here.\r\n\ This\ will\ handle\ all\ base\ functionality\ for\ each\ checker\ piece\ on\ the\ board\r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\n\ Write\ a\ description\ of\ class\ CheckerPiece\ here.\n\ This\ will\ handle\ all\ base\ functionality\ for\ each\ checker\ piece\ on\ the\ board\n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=
 comment1.target=CheckerPiece()
 comment2.params=

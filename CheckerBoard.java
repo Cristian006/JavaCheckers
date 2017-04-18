@@ -1,6 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.List;
-import java.awt.Color;
+
 import java.util.ArrayList;
 /**
  * Write a description of class MyWorld here.
@@ -75,29 +75,6 @@ public class CheckerBoard extends World
             }
         }
     }
-    /*
-    private ArrayList<AvailableLocation > getAllValidLocationsOhCheckerBoard()
-    {
-        ArrayList<AvailableLocation> locations = new ArrayList<AvailableLocation>();
-
-        for(int x = 150; x <= 750; x += 200)
-        {
-            for(int y = 50; y <= 650; y += 200)
-            {  
-                locations.add(new AvailableLocation (x,y));
-            }
-        }
-
-        for(int x = 50; x <= 650; x += 200)
-        {
-            for(int y = 150; y <= 750; y += 200)
-            {    
-                locations.add(new AvailableLocation (x,y));
-            }
-        }
-
-        return locations ;
-    }*/
 
     //is the current turn red
     public boolean getIsRedTurn(){
@@ -105,7 +82,7 @@ public class CheckerBoard extends World
     }
 
     //sets is red turn to whatever the opposite is
-    public void switchTurns(){
+    public void switchTurn(){
         isRedTurn = !isRedTurn;
     }
 
@@ -134,10 +111,7 @@ public class CheckerBoard extends World
         }
         else{
             System.out.println("CAN'T MOVE THAT OBJECT!");
-            //don't do anything
-            //the sent in piece is invalid
-            //maybe unselect only????
-            //UnSelect();
+            unSelect();
         }
     }
 
@@ -151,10 +125,12 @@ public class CheckerBoard extends World
         //populate array list recursively with vector2's of available spaces
         getMovableSquares(curX, curY);
         
+        System.out.println(movableVectors.size());
+        
         for(int i = 0; i < movableVectors.size(); i++){
             //set yellow squares in world
-            addYellow(movableVectors.get(i).getX(), movableVectors.get(i).getY());
-            
+            System.out.println("MOVE " + i + ": " + movableVectors.get(i).toString());
+            placePathTile(movableVectors.get(i).getX(), movableVectors.get(i).getY());
         }
     }
     
@@ -179,7 +155,6 @@ public class CheckerBoard extends World
         }
         // See if there is a further square to move to
         return notFinalSquare;
-        
     }
     
     // Returns true if there is a further square to move to
@@ -202,10 +177,14 @@ public class CheckerBoard extends World
                 }
                 return true;
             }
-        }else{
+            else{
+                return false;
+            }
+        }
+        else
+        {
             return false;
         }
-        
     }
     
     public checkerType checkPos(int posX, int posY){ // Given in mouse pos
@@ -232,16 +211,18 @@ public class CheckerBoard extends World
             if(isRedTurn != checkAry[posY][(posX/2)].isRed()){
                 return checkerType.Opponent;
             }
+            else{
+                return checkerType.Player;
+            }
         }
         else{
             return checkerType.Player;
         }
-
     }
 
     //Remove Movable Path for checker piece
     public void removeMovableSquares(){
-        removeYellow();
+        removePathTiles();
     }
 
     //Un Select the currently selected piece
@@ -255,17 +236,21 @@ public class CheckerBoard extends World
         }
         //else nothing we have to do.
     }
-
-    public void addYellow(int posX, int posY){ // Given in array pos
-
-        addObject(new PathTile(),
-            (posX * (halfWidth * 2)) + halfWidth,
-            (posY * (halfWidth * 2)) + halfWidth);
-
+    
+    public void placePathTile(int x, int y){
+       addObject(new PathTile(), x, y); 
     }
 
-    public void removeYellow(){
-        removeObjects(getObjects(PathTile.class));   
+    public void moveCheckerPiece(int x, int y){
+        // this is making a move - not final
+        removePathTiles();
+        selectedPiece.setLocation(x, y);
+        unSelect();
+        switchTurn();
+    }
+    
+    public void removePathTiles(){
+        removeObjects(getObjects(PathTile.class));
     }
 
     public void addCheckers(int posX, int posY, Checkers newCheck){

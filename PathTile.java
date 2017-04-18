@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.awt.Color;
+
 /**
  * Write a description of class YellowSquare here.
  * 
@@ -30,6 +30,7 @@ public class PathTile extends BoardObject
     
     @Override
     public void OnClick(){
-        //MOVE CURRENTLY SELECTED OBJECT TO THIS POSITION
+        //MOVE CURRENTLY SELECTED OBJECT TO THIS POSITION\
+        ((CheckerBoard)getWorld()).moveCheckerPiece(getX(), getY());
     }
 }

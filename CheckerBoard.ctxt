@@ -1,12 +1,12 @@
 #BlueJ class context
 comment0.target=CheckerBoard
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ MyWorld\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\n\ Write\ a\ description\ of\ class\ MyWorld\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=
 comment1.target=CheckerBoard()
 comment10.params=posXDir\ posYDir\ x\ y
-comment10.target=void\ getMovableSquaresInDirection(boolean,\ boolean,\ int,\ int)
+comment10.target=boolean\ getMovableSquaresInDirection(boolean,\ boolean,\ int,\ int)
 comment11.params=posX\ posY
-comment11.target=boolean\ checkPos(int,\ int)
+comment11.target=CheckerBoard.checkerType\ checkPos(int,\ int)
 comment12.params=
 comment12.target=void\ removeMovableSquares()
 comment13.params=
@@ -27,7 +27,7 @@ comment3.params=
 comment3.target=void\ putBlackPiecesOnTheBoard()
 comment4.params=
 comment4.target=boolean\ getIsRedTurn()
-comment4.text=\r\n\ \ \ \ private\ ArrayList<AvailableLocation\ >\ getAllValidLocationsOhCheckerBoard()\r\n\ \ \ \ {\r\n\ \ \ \ \ \ \ \ ArrayList<AvailableLocation>\ locations\ \=\ new\ ArrayList<AvailableLocation>();\r\n\r\n\ \ \ \ \ \ \ \ for(int\ x\ \=\ 150;\ x\ <\=\ 750;\ x\ +\=\ 200)\r\n\ \ \ \ \ \ \ \ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ for(int\ y\ \=\ 50;\ y\ <\=\ 650;\ y\ +\=\ 200)\r\n\ \ \ \ \ \ \ \ \ \ \ \ {\ \ \r\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ locations.add(new\ AvailableLocation\ (x,y));\r\n\ \ \ \ \ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ }\r\n\r\n\ \ \ \ \ \ \ \ for(int\ x\ \=\ 50;\ x\ <\=\ 650;\ x\ +\=\ 200)\r\n\ \ \ \ \ \ \ \ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ for(int\ y\ \=\ 150;\ y\ <\=\ 750;\ y\ +\=\ 200)\r\n\ \ \ \ \ \ \ \ \ \ \ \ {\ \ \ \ \r\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ locations.add(new\ AvailableLocation\ (x,y));\r\n\ \ \ \ \ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ }\r\n\r\n\ \ \ \ \ \ \ \ return\ locations\ ;\r\n}
+comment4.text=\n\ \ \ \ private\ ArrayList<AvailableLocation\ >\ getAllValidLocationsOhCheckerBoard()\n\ \ \ \ {\n\ \ \ \ \ \ \ \ ArrayList<AvailableLocation>\ locations\ \=\ new\ ArrayList<AvailableLocation>();\n\n\ \ \ \ \ \ \ \ for(int\ x\ \=\ 150;\ x\ <\=\ 750;\ x\ +\=\ 200)\n\ \ \ \ \ \ \ \ {\n\ \ \ \ \ \ \ \ \ \ \ \ for(int\ y\ \=\ 50;\ y\ <\=\ 650;\ y\ +\=\ 200)\n\ \ \ \ \ \ \ \ \ \ \ \ {\ \ \n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ locations.add(new\ AvailableLocation\ (x,y));\n\ \ \ \ \ \ \ \ \ \ \ \ }\n\ \ \ \ \ \ \ \ }\n\n\ \ \ \ \ \ \ \ for(int\ x\ \=\ 50;\ x\ <\=\ 650;\ x\ +\=\ 200)\n\ \ \ \ \ \ \ \ {\n\ \ \ \ \ \ \ \ \ \ \ \ for(int\ y\ \=\ 150;\ y\ <\=\ 750;\ y\ +\=\ 200)\n\ \ \ \ \ \ \ \ \ \ \ \ {\ \ \ \ \n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ locations.add(new\ AvailableLocation\ (x,y));\n\ \ \ \ \ \ \ \ \ \ \ \ }\n\ \ \ \ \ \ \ \ }\n\n\ \ \ \ \ \ \ \ return\ locations\ ;\n}
 comment5.params=
 comment5.target=void\ switchTurns()
 comment6.params=
@@ -37,5 +37,5 @@ comment7.target=void\ setSelected(CheckerPiece)
 comment8.params=
 comment8.target=void\ setMovableSquares()
 comment9.params=x\ y
-comment9.target=void\ getMovableSquares(int,\ int)
+comment9.target=boolean\ getMovableSquares(int,\ int)
 numComments=19

@@ -28,4 +28,9 @@ public class Vector2
     int getY(){
         return y;
     }
+    
+    @Override
+    public String toString(){
+        return ("(" + getX() + ", " + getY() + ")");
+    }
 }

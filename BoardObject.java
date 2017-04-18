@@ -6,28 +6,21 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class BoardObject extends Actor
+abstract class BoardObject extends Actor
 {
     public BoardObject(){
         //empty constructor
         super();
     }
     
-    
-    
-    
-    
     public void act() 
     {
         //setting the checkerboard's currently selected piece to this object
         if (Greenfoot.mouseClicked(this)) {
             //Whenever this Object is Clicked On
-            System.out.println("clicked: ");
             OnClick();
         }
     }
     
-    public void OnClick(){
-       
-    }
+    public abstract void OnClick();
 }

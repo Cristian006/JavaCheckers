@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.awt.Color;
+
 /**
  * Write a description of class CheckerPiece here.
  * This will handle all base functionality for each checker piece on the board
@@ -10,10 +10,9 @@ public class CheckerPiece extends BoardObject
 {
     //is this checker piece currently selected
     protected boolean isSelected = false;
-    private Color defaultColor;
-    private Color highlightColor = Color.WHITE;
     private GreenfootImage defaultImage;
     private GreenfootImage myImage;
+    private GreenfootImage selectedImage;
     protected int xPosition;
     protected int yPosition;
     
@@ -22,7 +21,7 @@ public class CheckerPiece extends BoardObject
         super();
         myImage = getImage();
         defaultImage = new GreenfootImage(myImage);
-        defaultColor = myImage.getColor();
+        selectedImage = new GreenfootImage("images/button-green.png");
     }
     
     public boolean getIsSelected(){
@@ -35,7 +34,6 @@ public class CheckerPiece extends BoardObject
     
     @Override
     public void OnClick(){
-        super.OnClick();
         selectThisObject();
     }
     
@@ -52,14 +50,11 @@ public class CheckerPiece extends BoardObject
     
     public void resetPiece(){
         isSelected = false;
-        myImage.setColor(defaultColor);
-        myImage.fill();
         myImage.drawImage(defaultImage, 0,0);
     }
     
     public void selectPiece(){
         isSelected = true;
-        myImage.setColor(highlightColor);
-        myImage.fill();
+        myImage.drawImage(selectedImage, 0, 0);
     }
 }

@@ -181,11 +181,11 @@ public class CheckersControl extends Actor
     
     public void removeYellow(){
         numOfYel = 0;
-        ((CheckerBoard)getWorld()).removeYellow();
+        ((CheckerBoard)getWorld()).removePathTiles();
     }
     
     public void createYellow(int posX, int posY){ // Given in array pos
-        ((CheckerBoard)getWorld()).addYellow(posX, posY); // Give array pos
+        ((CheckerBoard)getWorld()).placePathTile(posX, posY); // Give array pos
         numOfYel++;
     }
 }
