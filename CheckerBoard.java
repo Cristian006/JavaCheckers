@@ -48,8 +48,8 @@ public class CheckerBoard extends World
         checkAry = new CheckerPiece[numberOfSquaresDownTheBoard][numberOfSquaresAcrossTheBoard  / 2];
         for (int i = 0; i < numberOfRowsToPutCheckersOn ; i++){
             for (int k = 0; k < numberOfSquaresAcrossTheBoard  / 2; k++){
-                xLocation = ( ( ( (i + 1) % 2 ) + (k * 2) ) * (halfWidth * 2)) + halfWidth;
-                yLocation = (i * (halfWidth * 2)) + halfWidth;
+                xLocation = ( ( ( (i + 1) % 2 ) + (k * 2) ) * (fullWidth)) + halfWidth;
+                yLocation = (i * (fullWidth)) + halfWidth;
                 
                 checkAry[i][k] = new RedPiece(xLocation, yLocation);
                 addObject(checkAry[i][k], xLocation, yLocation);  
@@ -63,8 +63,7 @@ public class CheckerBoard extends World
         int xLocation;
         int yLocation;
         int rowsForBlackCheckers  = numberOfSquaresDownTheBoard  - numberOfRowsToPutCheckersOn ;
-        checkAry = new CheckerPiece[numberOfSquaresDownTheBoard][numberOfSquaresAcrossTheBoard  / 2];
-
+        
         for (int i = rowsForBlackCheckers; i < numberOfSquaresDownTheBoard; i++){
             for (int k = 0; k < numberOfSquaresAcrossTheBoard  / 2; k++){
                 xLocation = ( ( (i + 1) % 2 + (k * 2) ) * halfWidth * 2) + halfWidth;
@@ -204,19 +203,23 @@ public class CheckerBoard extends World
         if (checkAry[posY][(posX / 2)] == null && (posX + posY)% 2 > 0) 
         {
             //the spot is open
+            System.out.printf("Empty square");
             return checkerType.Empty;
+            
         }
         else if(checkAry[posY][(posX / 2)] != null && (posX + posY)% 2 > 0)
         {
-            if(isRedTurn != checkAry[posY][(posX/2)].isRed()){
+            if(isRedTurn && !checkAry[posY][(posX/2)].isRed()){
                 return checkerType.Opponent;
             }
             else{
+                System.out.printf("Player piece");
                 return checkerType.Player;
+                
             }
         }
         else{
-            return checkerType.Player;
+            return checkerType.Empty;
         }
     }
 
@@ -245,6 +248,9 @@ public class CheckerBoard extends World
         // this is making a move - not final
         removePathTiles();
         selectedPiece.setLocation(x, y);
+        //move in array pos
+        //checkAry[][] = selectedPiece
+        
         unSelect();
         switchTurn();
     }
