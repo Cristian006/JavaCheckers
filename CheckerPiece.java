@@ -15,6 +15,7 @@ public class CheckerPiece extends BoardObject
     private GreenfootImage selectedImage;
     protected int xPosition;
     protected int yPosition;
+    protected boolean isUpgraded = false;
     
     public CheckerPiece(){
         //empty constructor
@@ -35,6 +36,14 @@ public class CheckerPiece extends BoardObject
     @Override
     public void OnClick(){
         selectThisObject();
+    }
+    
+    public boolean isUpgraded(){
+        return isUpgraded;
+    }
+    
+    public void upgrade(){
+        isUpgraded = true;
     }
     
     protected void selectThisObject(){

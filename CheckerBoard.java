@@ -22,7 +22,6 @@ public class CheckerBoard extends World
     private final int numberOfSquaresDownTheBoard  = 8;
     private final int numberOfRowsToPutCheckersOn  = 3;
     private static CheckerPiece [][] checkAry;
-    private ArrayList<CheckerPiece> takenPieces;
     //private vars
     private boolean isRedTurn = false;
     private CheckerPiece selectedPiece = null;
@@ -120,45 +119,48 @@ public class CheckerBoard extends World
         movableVectors = new ArrayList<Vector2>();
         int curX = selectedPiece.getX();
         int curY = selectedPiece.getY();
-        takenPieces = new ArrayList<CheckerPiece>();
+        ArrayList<CheckerPiece> takenPieces = new ArrayList<CheckerPiece>();
         
         //populate array list recursively with vector2's of available spaces
-        getMovableSquares(curX, curY, false, false, false);
+        getMovableSquares(curX, curY, false, false, false, takenPieces);
         
-        System.out.println(movableVectors.size());
+        //System.out.println(movableVectors.size());
         
+        /*
         for(int i = 0; i < movableVectors.size(); i++){
             //set yellow squares in world
             System.out.println("MOVE " + i + ": " + movableVectors.get(i).toString());
             placePathTile(movableVectors.get(i).getX(), movableVectors.get(i).getY());
         }
+        */
     }
     
     // Returns true if there is a further square to move to
-    public boolean getMovableSquares(int x, int y, boolean dirIgnoreX, boolean dirIgnoreY, boolean dirIg){
+    public boolean getMovableSquares(int x, int y, boolean dirIgnoreX, boolean dirIgnoreY,
+                                     boolean dirIg,ArrayList<CheckerPiece> remPieces){
         boolean notFinalSquare = false;
         
         // Now has the opposite moving direction check to make sure the checkers dont loop back on one jump
-        if (!(dirIg && dirIgnoreY && dirIgnoreX)){
-            if (getMovableSquaresInDirection(true, true, x, y)){
+        if (!(dirIg && dirIgnoreY && dirIgnoreX) && (selectedPiece.isUpgraded() || isRedTurn)){
+            if (getMovableSquaresInDirection(true, true, x, y,new ArrayList<CheckerPiece>(remPieces))){
                 notFinalSquare = true;
             }
         }
         
-        if (!(dirIg && !dirIgnoreY && dirIgnoreX)){
-            if (getMovableSquaresInDirection(true, false, x, y)){
+        if (!(dirIg && !dirIgnoreY && dirIgnoreX) && (selectedPiece.isUpgraded() || !isRedTurn)){
+            if (getMovableSquaresInDirection(true, false, x, y,new ArrayList<CheckerPiece>(remPieces))){
                 notFinalSquare = true;
             }
         }
         
-        if (!(dirIg && dirIgnoreY && !dirIgnoreX)){
-            if (getMovableSquaresInDirection(false, true, x, y)){
+        if (!(dirIg && dirIgnoreY && !dirIgnoreX) && (selectedPiece.isUpgraded() || isRedTurn)){
+            if (getMovableSquaresInDirection(false, true, x, y,new ArrayList<CheckerPiece>(remPieces))){
                 notFinalSquare = true;
             }
         }
         
-        if (!(dirIg && !dirIgnoreY && !dirIgnoreX)){
-            if (getMovableSquaresInDirection(false, false, x, y)){
+        if (!(dirIg && !dirIgnoreY && !dirIgnoreX) && (selectedPiece.isUpgraded() || !isRedTurn)){
+            if (getMovableSquaresInDirection(false, false, x, y,new ArrayList<CheckerPiece>(remPieces))){
                 notFinalSquare = true;
             }
         }
@@ -167,22 +169,25 @@ public class CheckerBoard extends World
     }
     
     // Returns true if there is a further square to move to
-    public boolean getMovableSquaresInDirection(boolean posXDir, boolean posYDir, int x, int y){
+    public boolean getMovableSquaresInDirection(boolean posXDir, boolean posYDir, int x, int y,
+                                                ArrayList<CheckerPiece> remList){
         int xMovementSize = posXDir ? fullWidth : -fullWidth;
         int yMovementSize = posYDir ? fullWidth : -fullWidth;
   
         checkerType currentType = checkPos(x + xMovementSize, y + yMovementSize);
         
-        if(currentType == checkerType.Empty && takenPieces.size() == 0){
-            movableVectors.add(new Vector2(x + xMovementSize, y + yMovementSize));
+        if(currentType == checkerType.Empty && remList.size() == 0){
+            placePathTile(x + xMovementSize, y + yMovementSize, remList);
             return false;
         }else if (currentType == checkerType.Opponent){
             currentType = checkPos(x + (xMovementSize * 2), y + (yMovementSize * 2));
                 
             if(currentType == checkerType.Empty){
-                takenPieces.add(checkAry[(y+yMovementSize)/fullWidth][(x+xMovementSize)/(fullWidth * 2)]);
-                if( ! getMovableSquares(x + (xMovementSize * 2), y + (yMovementSize * 2), !posXDir, !posYDir, true)){
-                    movableVectors.add(new Vector2(x + (xMovementSize * 2), y + (yMovementSize * 2)));
+                remList.add(checkAry[(y+yMovementSize)/fullWidth][(x+xMovementSize)/(fullWidth * 2)]);
+                if( ! getMovableSquares(x + (xMovementSize * 2), y + (yMovementSize * 2), !posXDir, !posYDir,
+                        true,new ArrayList<CheckerPiece>(remList))){
+                            
+                    placePathTile(x + (xMovementSize * 2), y + (yMovementSize * 2), remList);
                 }
                 return true;
             }
@@ -199,8 +204,8 @@ public class CheckerBoard extends World
     public checkerType checkPos(int posX, int posY){ // Given in mouse pos
         //Check out of bounds first
         
-        if (posX < 0 || posY < 0 || (posX > (fullWidth * (numberOfSquaresAcrossTheBoard - 1)) ) ||
-            posY > (fullWidth * (numberOfSquaresAcrossTheBoard - 1) )){
+        if (posX < 0 || posY < 0 || (posX > (fullWidth * (numberOfSquaresAcrossTheBoard)) ) ||
+            posY > (fullWidth * (numberOfSquaresAcrossTheBoard) )){
                 return checkerType.OutOfBounds;
         }
             
@@ -250,11 +255,11 @@ public class CheckerBoard extends World
         //else nothing we have to do.
     }
     
-    public void placePathTile(int x, int y){
-       addObject(new PathTile(), x, y); 
+    public void placePathTile(int x, int y, ArrayList<CheckerPiece> remPieces){
+       addObject(new PathTile(remPieces), x, y); 
     }
 
-    public void moveCheckerPiece(int x, int y){
+    public void moveCheckerPiece(int x, int y, ArrayList<CheckerPiece> takenPieces){
         // this is making a move - not final
         removePathTiles();
         
@@ -280,6 +285,10 @@ public class CheckerBoard extends World
         checkAry[y/fullWidth][x/(fullWidth * 2)] = selectedPiece;
         checkAry[tempY/fullWidth][tempX/(fullWidth * 2)] = null;
         
+        if (( y/fullWidth == numberOfSquaresDownTheBoard && isRedTurn ) ||
+              y/fullWidth == 0 && !isRedTurn){
+            selectedPiece.upgrade();
+        }
         
         unSelect();
         switchTurn();

@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.util.ArrayList;
 /**
  * Write a description of class YellowSquare here.
  * 
@@ -13,11 +13,13 @@ public class PathTile extends BoardObject
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     private final int halfWidth = 50;
+    private ArrayList<CheckerPiece> remPieces;
     
     private GreenfootImage yellowSquare = new GreenfootImage(100, 100);
     
-    public PathTile()
+    public PathTile(ArrayList<CheckerPiece> setRem)
     {
+        remPieces = new ArrayList<CheckerPiece>(setRem);
         colorSquare();
     }
     
@@ -31,6 +33,6 @@ public class PathTile extends BoardObject
     @Override
     public void OnClick(){
         //MOVE CURRENTLY SELECTED OBJECT TO THIS POSITION\
-        ((CheckerBoard)getWorld()).moveCheckerPiece(getX(), getY());
+        ((CheckerBoard)getWorld()).moveCheckerPiece(getX(), getY(), remPieces);
     }
 }
